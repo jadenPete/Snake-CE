@@ -11,16 +11,14 @@
 #define RIGHT 2
 #define UP    3
 
-#define INTERVAL 32768/10
-
-uint8_t pix_size = 8;
-uint8_t grid_size[2];
-
 Snake snake;
-bool alive = true;
-
 uint8_t dir = DOWN;
+bool alive = true;
 bool moved = false;
+
+const uint16_t interval = 32768/10;
+const uint8_t pix_size = 8;
+uint8_t grid_size[2];
 
 void fillScreen(uint8_t index){
 	memset(lcd_Ram, index, LCD_SIZE);
@@ -88,7 +86,7 @@ void changeDir(uint8_t new_dir){
 void main(void){
 	uint8_t cell[2] = {0, 0};
 
-    os_ClrHome();
+	os_ClrHome();
 	gfx_Begin();
 
 	gfx_palette[0] = gfx_RGBTo1555(0, 0, 0);
@@ -104,7 +102,7 @@ void main(void){
 
 	timer_Control = TIMER1_DISABLE;
 
-	timer_1_ReloadValue = timer_1_Counter = INTERVAL;
+	timer_1_ReloadValue = timer_1_Counter = interval;
 	timer_Control = TIMER1_ENABLE | TIMER1_32K | TIMER1_0INT | TIMER1_DOWN;
 
 	while(kb_Data[6] != kb_Clear && alive){
